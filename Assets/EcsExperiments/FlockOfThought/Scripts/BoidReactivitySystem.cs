@@ -45,7 +45,8 @@ public class BoidReactivitySystem : JobComponentSystem
 
             amplitude[i] = Mathf.Clamp(fftOut[i], 0, 1);
         }
-
+        
+        if (_result.IsCreated) _result.Dispose();
         _result = new NativeArray<float>(fftIn.Length, Allocator.TempJob);
         _result.CopyFrom(amplitude);
 
@@ -72,6 +73,6 @@ public class BoidReactivitySystem : JobComponentSystem
     protected override void OnDestroyManager()
     {
         base.OnDestroyManager();
-        _result.Dispose();
+        if (_result.IsCreated) _result.Dispose();
     }
 }
