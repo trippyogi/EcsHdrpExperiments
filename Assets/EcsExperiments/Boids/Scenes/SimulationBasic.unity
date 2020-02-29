@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 911001185}
   - component: {fileID: 911001184}
   m_Layer: 0
-  m_Name: Skybox
+  m_Name: Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -776,6 +776,6 @@ MonoBehaviour:
   _fftBands: 11
   _holdAndFallDown: 1
   _fallDownSpeed: 0.1
-  _baseDistance: 444
+  _baseDistance: 1111
   _pumpIndex: 1
   _pumpScale: 1111
