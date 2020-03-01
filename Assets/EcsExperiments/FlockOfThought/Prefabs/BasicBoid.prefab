@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9020864153842632044}
   - component: {fileID: 1973732795433105668}
   - component: {fileID: 805961758975793888}
+  - component: {fileID: 5875467130598625383}
   - component: {fileID: -2516566534748319116}
   m_Layer: 0
   m_Name: BasicBoid
@@ -99,7 +100,7 @@ MonoBehaviour:
   AlignmentWeight: 1
   TargetWeight: 111
   ObstacleAversionDistance: 30
-  MoveSpeed: 25
+  MoveSpeed: 111
 --- !u!114 &805961758975793888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,6 +114,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 0, g: 1, b: 0.99999976, a: 0}
+--- !u!114 &5875467130598625383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2163163104970457873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a538ed6e7eeeff54983966694089e998, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intensity: 111
 --- !u!114 &-2516566534748319116
 MonoBehaviour:
   m_ObjectHideFlags: 0

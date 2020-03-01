@@ -24,7 +24,7 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: 2ca3e129c08c8a04faf49bcf8499d943,
     type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_LightmapFlags: 1
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -41,6 +41,7 @@ Material:
     - _AlphaDstBlend: 0
     - _AlphaSrcBlend: 1
     - _BlendMode: 0
+    - _BoidEmission: 1
     - _CullMode: 2
     - _CullModeForward: 2
     - _DoubleSidedEnable: 0
@@ -70,6 +71,7 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
+    - _BoidColor: {r: 0.9194362, g: 0.070754685, b: 1, a: 0}
     - _Color: {r: 0.9194362, g: 0.070754685, b: 1, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}

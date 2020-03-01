@@ -7,10 +7,10 @@ using UnityEngine;
 namespace Samples.Boids
 {
     [Serializable]
-    [MaterialProperty("_BoidColor", MaterialPropertyFormat.Float4)]
-    public struct ColorComponent : IComponentData
+    [MaterialProperty("_BoidEmission", MaterialPropertyFormat.Float)]
+    public struct EmissionComponent : IComponentData
     {
-        public float4 Value;
+        public float Value;
     }
 
     namespace Authoring
@@ -18,13 +18,13 @@ namespace Samples.Boids
         [DisallowMultipleComponent]
         [RequiresEntityConversion]
         [ConverterVersion("jeremy", 1)]
-        public class ColorComponent : MonoBehaviour, IConvertGameObjectToEntity
+        public class EmissionComponent : MonoBehaviour, IConvertGameObjectToEntity
         {
-            public Color color;
+            public float intensity;
 
             public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
             {
-                var data = new Samples.Boids.ColorComponent { Value = new float4(color.r, color.g, color.b, color.a) };
+                var data = new Samples.Boids.EmissionComponent { Value = intensity };
                 dstManager.AddComponentData(entity, data);
             }
         }
