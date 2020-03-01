@@ -300,7 +300,8 @@ namespace Samples.Boids
                     .WithReadOnly(cellTargetPositionIndex)
                     .WithReadOnly(copyObstaclePositions)
                     .WithReadOnly(copyTargetPositions)
-                    .ForEach((Entity entity, int entityInQueryIndex, ref LocalToWorld localToWorld) =>
+                    .ForEach((Entity entity, int entityInQueryIndex, ref LocalToWorld localToWorld,
+                        ref ColorComponent colorComponent) =>
                     {
                         // temporarily storing the values for code readability
                         var forward = localToWorld.Forward;
@@ -354,9 +355,13 @@ namespace Samples.Boids
                         var targetForward = math.select(normalHeading, avoidObstacleHeading,
                             nearestObstacleDistanceFromRadius < 0);
 
-                        // used for audio reactive scale
+                        // audio reactive scale
                         var index = entityInQueryIndex % 11;
                         var scale = fftResult[index] * (index + 1);
+
+                        // audio reactive color
+                        colorComponent.Value = new float4(fftResult[index] + .5f, fftResult[index],
+                            fftResult[index] + .5f, 0);
                         
                         // updates using the newly calculated heading direction
                         var nextHeading = math.normalizesafe(forward + deltaTime * (targetForward - forward));
@@ -366,11 +371,9 @@ namespace Samples.Boids
                                 new float3(localToWorld.Position + (nextHeading * settings.MoveSpeed * deltaTime) +
                                            nextHeading * fftResult[3] * 3),
                                 quaternion.LookRotationSafe(nextHeading, math.up()),
-                                new float3(scale, scale, scale))
+                                new float3(1, 1, 1))
+                                // new float3(scale, scale, scale))
                         };
-                        // var renderer = EntityManager.GetSharedComponentData<RenderMesh>(entity);
-                        // renderer.material.color = Color.cyan;
-                        // EntityManager.SetSharedComponentData(entity, );
                     }).Schedule(mergeCellsJobHandle);
 
                 // Dispose allocated containers with dispose jobs.
@@ -400,7 +403,7 @@ namespace Samples.Boids
                 m_BoidQuery.AddDependency(inputDeps);
                 m_BoidQuery.ResetFilter();
             }
-            
+
             m_UniqueTypes.Clear();
 
             return inputDeps;
@@ -410,7 +413,7 @@ namespace Samples.Boids
         {
             m_BoidQuery = GetEntityQuery(new EntityQueryDesc
             {
-                All = new[] { ComponentType.ReadOnly<Boid>(), ComponentType.ReadWrite<LocalToWorld>()},
+                All = new[] { ComponentType.ReadOnly<Boid>(), ComponentType.ReadWrite<LocalToWorld>() },
             });
 
             RequireForUpdate(m_BoidQuery);

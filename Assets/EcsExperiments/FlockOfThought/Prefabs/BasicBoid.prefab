@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7069703613273776453}
   - component: {fileID: 9020864153842632044}
   - component: {fileID: 1973732795433105668}
-  - component: {fileID: -4728549168073398766}
+  - component: {fileID: 805961758975793888}
   - component: {fileID: -2516566534748319116}
   m_Layer: 0
   m_Name: BasicBoid
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e340e083935a14e4ab91933c4d9f2b73, type: 2}
+  - {fileID: 2100000, guid: ff1c933f8edfa01489ff3a4c4d813eb7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,7 +100,7 @@ MonoBehaviour:
   TargetWeight: 111
   ObstacleAversionDistance: 30
   MoveSpeed: 25
---- !u!114 &-4728549168073398766
+--- !u!114 &805961758975793888
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,10 +109,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2163163104970457873}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb676996e2f3ffb46be05e024c7f0ff7, type: 3}
+  m_Script: {fileID: 11500000, guid: b733d855fc9396144b06c5c7cc878adc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0, g: 0, b: 0, a: 0}
+  color: {r: 0, g: 1, b: 0.99999976, a: 0}
 --- !u!114 &-2516566534748319116
 MonoBehaviour:
   m_ObjectHideFlags: 0
