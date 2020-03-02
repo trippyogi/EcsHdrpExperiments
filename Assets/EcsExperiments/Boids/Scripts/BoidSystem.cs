@@ -115,22 +115,6 @@ namespace Samples.Boids
         private float _heightOffset = 0;
         private const float FallDownSpeed = .3f;
         private NativeArray<float> _result;
-        private NativeArray<Color> _colors;
-
-        private readonly Color[] _colorArray = new[]
-        {
-            Color.magenta,
-            Color.cyan,
-            Color.yellow,
-            Color.red,
-            Color.blue,
-            Color.green,
-            Color.magenta,
-            Color.cyan,
-            Color.yellow,
-            Color.red,
-            Color.blue,
-        };
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
@@ -161,11 +145,6 @@ namespace Samples.Boids
             _result = new NativeArray<float>(fftIn.Length, Allocator.TempJob);
             _result.CopyFrom(amplitude);
             var fftResult = _result;
-
-            if (_colors.IsCreated) _colors.Dispose();
-            _colors = new NativeArray<Color>(fftIn.Length, Allocator.TempJob);
-            _colors.CopyFrom(_colorArray);
-            var colors = _colors;
 
             var obstacleCount = m_ObstacleQuery.CalculateEntityCount();
             var targetCount = m_TargetQuery.CalculateEntityCount();
@@ -381,10 +360,10 @@ namespace Samples.Boids
                         var scale = fftResult[index] * (index + 1);
 
                         // audio reactive color
-                        var color = GetColor(time / 3 + (float) index / fftResult.Length, new float3(0.5f, 0.5f, 0.5f),
-                            new float3(0.5f, 0.5f, 0.5f), new float3(1.0f, 1.0f, 0.5f), new float3(0.8f, 0.90f, 0.30f));
+                        var color = GetColor(time / 3 + (float)index * 3, new float3(0.5f, 0.5f, 0.5f),
+                            new float3(0.5f, 0.5f, 0.5f), new float3(1.0f, 1.0f, 0.5f), new float3(0.8f, fftResult[index], 0.30f));
                         colorComponent.Value = new float4(color.x, color.y, color.z, 0);
-                        emissionComponent.Value = fftResult[index] * 10000;
+                        emissionComponent.Value = fftResult[index] * 3333;
 
                         // updates using the newly calculated heading direction
                         var nextHeading = math.normalizesafe(forward + deltaTime * (targetForward - forward));
@@ -447,7 +426,6 @@ namespace Samples.Boids
         {
             base.OnDestroyManager();
             if (_result.IsCreated) _result.Dispose();
-            if (_colors.IsCreated) _colors.Dispose();
         }
 
         private static float3 GetColor(float time, float3 a, in float3 b, in float3 c, in float3 d)
