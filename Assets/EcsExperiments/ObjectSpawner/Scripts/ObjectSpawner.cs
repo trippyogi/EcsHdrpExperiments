@@ -1,8 +1,10 @@
-﻿using Unity.Collections;
+﻿using Samples.Boids.Authoring;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Advanced.ObjectSpawner
 {
@@ -15,6 +17,18 @@ namespace Advanced.ObjectSpawner
     public class ObjectSpawnerSystem : ComponentSystem
     {
         EntityQuery m_MainGroup;
+
+        private readonly float4[] _colors =
+        {
+            new float4(106, 74, 232, 0),
+            new float4(235, 66, 172, 0),
+            new float4(255, 120, 120, 0),
+            new float4(255, 152, 84, 0),
+            new float4(255, 255, 105, 0),
+            new float4(113, 245, 100, 0),
+            new float4(95, 207, 232, 0)
+        };
+
 
         protected override void OnCreate()
         {
@@ -37,7 +51,9 @@ namespace Advanced.ObjectSpawner
                         Value = new float3(0, 0.9f * math.sin(5.0f * spawnTime), 0.9f * math.cos(5.0f * spawnTime))
                     });
                 PostUpdateCommands.SetComponent(newEntity, new ProjectileSpawnTime { SpawnTime = spawnTime });
-                PostUpdateCommands.AddComponent(newEntity, new Scale { Value = 0 });
+                PostUpdateCommands.SetComponent(newEntity,
+                    new Samples.Boids.ColorComponent { Value = _colors[Random.Range(0, 7)] });
+                // PostUpdateCommands.AddComponent(newEntity, new Scale { Value = 0 });
             });
         }
     }

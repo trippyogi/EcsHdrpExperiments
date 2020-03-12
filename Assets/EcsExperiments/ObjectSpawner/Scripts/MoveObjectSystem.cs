@@ -47,7 +47,7 @@ namespace Advanced.ObjectSpawner
                     Value = float4x4.TRS(
                         translation,
                         rotation,
-                        new float3(10 * scale, 10 * scale, 10 * scale))
+                        new float3(10 * scale, scale, scale))
                 };
             }
         }
