@@ -13,9 +13,8 @@ public class CameraPump : MonoBehaviour
     [SerializeField] bool _holdAndFallDown = true;
     [SerializeField, Range(0, 1)] float _fallDownSpeed = 0.1f;
     
-    [SerializeField] float _baseDistance = 300;
     [SerializeField] [Range(0,10)] int _pumpIndex = 3;
-    [SerializeField] [Range(1,10000)] float _pumpScale = 300;
+    [SerializeField] [Range(0,100)] float _pumpScale = 33;
 
     private int _bands;
     private float _fall = 0;
@@ -23,6 +22,7 @@ public class CameraPump : MonoBehaviour
 
     // Camera fields
     private Camera _cam;
+    private float _originalFov;
 
     void Start()
     {
@@ -42,6 +42,7 @@ public class CameraPump : MonoBehaviour
         _fftOut = new float[_fftBands];
 
         _cam = GetComponent<Camera>();
+        _originalFov = _cam.fieldOfView;
     }
 
     void UpdateFft()
@@ -77,7 +78,9 @@ public class CameraPump : MonoBehaviour
         if (_bands != _fftBands)
             Initialize();
 
-        var position = new Vector3(0, 0, _baseDistance - Mathf.Clamp(_fftOut[_pumpIndex], 0, 1) * _pumpScale);
-        _cam.transform.localPosition = position;
+        // var position = new Vector3(0, 0, _baseDistance - Mathf.Clamp(_fftOut[_pumpIndex], 0, 1) * _pumpScale);
+        // _cam.transform.localPosition = position;
+
+        _cam.fieldOfView = _originalFov - Mathf.Clamp(_fftOut[_pumpIndex], 0, 1) * _pumpScale;
     }
 }

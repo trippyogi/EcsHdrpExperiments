@@ -29,7 +29,6 @@ namespace Advanced.ObjectSpawner
             new float4(95, 207, 232, 0)
         };
 
-
         protected override void OnCreate()
         {
             m_MainGroup = GetEntityQuery(
@@ -48,12 +47,14 @@ namespace Advanced.ObjectSpawner
                 PostUpdateCommands.SetComponent(newEntity,
                     new Translation
                     {
-                        Value = new float3(0, 0.9f * math.sin(5.0f * spawnTime), 0.9f * math.cos(5.0f * spawnTime))
+                        Value = new float3(0, 3f * math.sin(5.0f * spawnTime) + Random.Range(-3, 3),
+                            3f * math.cos(5.0f * spawnTime) + Random.Range(-3, 3))
                     });
                 PostUpdateCommands.SetComponent(newEntity, new ProjectileSpawnTime { SpawnTime = spawnTime });
                 PostUpdateCommands.SetComponent(newEntity,
                     new Samples.Boids.ColorComponent { Value = _colors[Random.Range(0, 7)] });
-                // PostUpdateCommands.AddComponent(newEntity, new Scale { Value = 0 });
+                PostUpdateCommands.SetComponent(newEntity,
+                    new Samples.Boids.EmissionComponent() { Value = 0 });
             });
         }
     }
