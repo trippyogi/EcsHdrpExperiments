@@ -107,6 +107,7 @@ namespace Samples.Boids
         }
 
         // Fft properties
+        public NativeArray<float> GlobalFftArray;
         private const int NumBands = 11;
         readonly float[] fftIn = new float[NumBands];
         readonly float[] fftOut = new float[NumBands];
@@ -114,7 +115,6 @@ namespace Samples.Boids
         private float _fall = 0;
         private float _heightOffset = 0;
         private const float FallDownSpeed = .3f;
-        private NativeArray<float> _result;
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
@@ -141,10 +141,10 @@ namespace Samples.Boids
                 amplitude[i] = Mathf.Clamp(fftOut[i], 0, 1);
             }
 
-            if (_result.IsCreated) _result.Dispose();
-            _result = new NativeArray<float>(fftIn.Length, Allocator.TempJob);
-            _result.CopyFrom(amplitude);
-            var fftResult = _result;
+            if (GlobalFftArray.IsCreated) GlobalFftArray.Dispose();
+            GlobalFftArray = new NativeArray<float>(fftIn.Length, Allocator.TempJob);
+            GlobalFftArray.CopyFrom(amplitude);
+            var fftResult = GlobalFftArray;
 
             var obstacleCount = m_ObstacleQuery.CalculateEntityCount();
             var targetCount = m_TargetQuery.CalculateEntityCount();
@@ -425,7 +425,7 @@ namespace Samples.Boids
         protected override void OnDestroyManager()
         {
             base.OnDestroyManager();
-            if (_result.IsCreated) _result.Dispose();
+            if (GlobalFftArray.IsCreated) GlobalFftArray.Dispose();
         }
 
         private static float3 GetColor(float time, float3 a, in float3 b, in float3 c, in float3 d)

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Advanced.ObjectSpawner;
 using Lasp;
+using Samples.Boids;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
@@ -20,21 +21,22 @@ public class FftUpdater : MonoBehaviour
     private float[] _fftIn, _fftOut;
 
     private MoveObjectSystem _spawnerSystem;
+    private BoidSystem _boidSystem;
 
     void Start()
     {
         Initialize();
         _spawnerSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MoveObjectSystem>();
         _spawnerSystem.GlobalFftArray = new NativeArray<float>(_fftBands, Allocator.TempJob);
+        _boidSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<BoidSystem>();
+        _boidSystem.GlobalFftArray = new NativeArray<float>(_fftBands, Allocator.TempJob);
     }
 
     void Update()
     {
         UpdateFft();
-        if (_spawnerSystem == null)
-            _spawnerSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MoveObjectSystem>();
         _spawnerSystem.GlobalFftArray.CopyFrom(_fftOut);
-        // _spawnerSystem.Update();
+        _boidSystem.GlobalFftArray.CopyFrom(_fftOut);
     }
 
     private void OnDestroy()
